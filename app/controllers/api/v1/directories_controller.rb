@@ -19,12 +19,13 @@ class Api::V1::DirectoriesController < Api::BaseController
   end
 
   def accounts_scope
-    Account.discoverable.tap do |scope|
-      scope.merge!(Account.local)                                          if truthy_param?(:local)
-      scope.merge!(Account.by_recent_status)                               if params[:order].blank? || params[:order] == 'active'
-      scope.merge!(Account.order(id: :desc))                               if params[:order] == 'new'
-      scope.merge!(Account.not_excluded_by_account(current_account))       if current_account
-      scope.merge!(Account.not_domain_blocked_by_account(current_account)) if current_account && !truthy_param?(:local)
-    end
+    # Account.discoverable.tap do |scope|
+    #   scope.merge!(Account.local)                                          if truthy_param?(:local)
+    #   scope.merge!(Account.by_recent_status)                               if params[:order].blank? || params[:order] == 'active'
+    #   scope.merge!(Account.order(id: :desc))                               if params[:order] == 'new'
+    #   scope.merge!(Account.not_excluded_by_account(current_account))       if current_account
+    #   scope.merge!(Account.not_domain_blocked_by_account(current_account)) if current_account && !truthy_param?(:local)
+    # end
+    Account.discoverable
   end
 end

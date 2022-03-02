@@ -4,7 +4,7 @@ require 'sidekiq_unique_jobs/web'
 require 'sidekiq-scheduler/web'
 
 Rails.application.routes.draw do
-  root 'home#index'
+  root 'directories#index'
 
   mount LetterOpenerWeb::Engine, at: 'letter_opener' if Rails.env.development?
 
