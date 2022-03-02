@@ -14,6 +14,7 @@ class Auth::SessionsController < Devise::SessionsController
   before_action :set_body_classes
 
   def create
+    return unless Setting.find_by(var: 'open_login') || true
     super do |resource|
       # We only need to call this if this hasn't already been
       # called from one of the two-factor or sign-in token
