@@ -21,32 +21,6 @@
 
 .grid
   .column-0
-    .h-feed
-      %data.p-name{ value: "#{@account.username} on #{site_hostname}" }/
-
-      .account__section-headline
-        = active_link_to t('accounts.posts_tab_heading'), short_account_url(@account)
-        = active_link_to t('accounts.posts_with_replies'), short_account_with_replies_url(@account)
-        = active_link_to t('accounts.media'), short_account_media_url(@account)
-
-      - if user_signed_in? && @account.blocking?(current_account)
-        .nothing-here.nothing-here--under-tabs= t('accounts.unavailable')
-      - elsif @statuses.empty?
-        = nothing_here 'nothing-here--under-tabs'
-      - else
-        .activity-stream.activity-stream--under-tabs
-          - if params[:page].to_i.zero?
-            = render partial: 'statuses/status', collection: @pinned_statuses, as: :status, locals: { pinned: true }
-
-          - if @newer_url
-            .entry= link_to_newer @newer_url
-
-          = render partial: 'statuses/status', collection: @statuses, as: :status
-
-          - if @older_url
-            .entry= link_to_older @older_url
-
-  .column-1
     - if @account.memorial?
       .memoriam-widget= t('in_memoriam_html')
     - elsif @account.moved?
@@ -84,3 +58,29 @@
             .trends__item__current= friendly_number_to_human featured_tag.statuses_count
 
     = render 'application/sidebar'
+
+  .column-1
+    .h-feed
+      %data.p-name{ value: "#{@account.username} on #{site_hostname}" }/
+
+      .account__section-headline
+        -# = active_link_to t('accounts.posts_tab_heading'), short_account_url(@account)
+        -# = active_link_to t('accounts.posts_with_replies'), short_account_with_replies_url(@account)
+        = active_link_to t('accounts.media'), short_account_media_url(@account)
+
+      - if user_signed_in? && @account.blocking?(current_account)
+        .nothing-here.nothing-here--under-tabs= t('accounts.unavailable')
+      - elsif @statuses.empty?
+        = nothing_here 'nothing-here--under-tabs'
+      - else
+        .activity-stream.activity-stream--under-tabs
+          - if params[:page].to_i.zero?
+            = render partial: 'statuses/status', collection: @pinned_statuses, as: :status, locals: { pinned: true }
+
+          - if @newer_url
+            .entry= link_to_newer @newer_url
+
+          = render partial: 'statuses/status', collection: @statuses, as: :status
+
+          - if @older_url
+            .entry= link_to_older @older_url
