@@ -296,6 +296,9 @@ class Account < ApplicationRecord
 
   def fields
     (self[:fields] || []).map do |f|
+      # Do not show rows with empty values
+      next if f['value'].blank?
+
       Field.new(self, f)
     rescue
       nil
