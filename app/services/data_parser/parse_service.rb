@@ -4,7 +4,7 @@ module DataParser
   class ParseService
     FILE_PATH='sample_military.csv'
 
-    def self.call(args)
+    def self.call(args={})
       new.call(**args)
     end
 
